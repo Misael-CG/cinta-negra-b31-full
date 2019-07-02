@@ -21,6 +21,11 @@ const typeDefs = gql`
     message: String
   }
 
+  input PostInput {
+    title: String, 
+    content: String,
+  }
+
   input UserInput {
     name: String!
     lastName: String!
@@ -36,6 +41,7 @@ const typeDefs = gql`
   type Mutation {
     signup(data: UserInput): Auth
     login(email: String!, password: String!): Auth
+    cretePost(postData: PostInput) : Message
   }
 `;
 

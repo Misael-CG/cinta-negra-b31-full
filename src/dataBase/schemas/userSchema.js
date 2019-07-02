@@ -21,8 +21,16 @@ const UserSchema = new Schema({
   password: {
     type: String,
     required: true,
-  }
-});
+  },
+  gender: {
+    type: String,
+    enum: ['Hombre', 'Mujer']
+  },
+  posts: [{
+    type: Schema.Types.ObjectId,
+    ref: 'posts',
+  }]
+}, {timestamps: true});
 
 // convierte el id en string.
 mongoose.Types.ObjectId.prototype.valueOf = function () {

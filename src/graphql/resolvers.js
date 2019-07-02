@@ -6,6 +6,12 @@ const {
   loginAction,
   signupAction,
 } = require('../actions/userActions');
+const {
+  createPostAction
+} = require('../actions/postActions');
+const {
+  addPostToUserAction
+} = require('../actions/userActions');
 
 // Resolvers funciones que son la logica del negocio y son acciones que define como se
 // comportan las queries y las mutations
@@ -16,10 +22,10 @@ const {
 
 const resolvers = {
   Query: {
-    queryWithLogin: () => {
+    queryWithLogin: (parent, args, context, info) => {
       return { message: 'este es un query con login' }
     },
-    simpleQuery: () => {
+    simpleQuery: (parent, args, context, info) => {
       return { message: 'este es un simple query' }
     }
   },
@@ -38,6 +44,19 @@ const resolvers = {
       }).catch(error => {
         return error;
       })
+    },
+    cretePost: (parent, args, context, info) => {
+      const { user } = context;
+      console.log("TCL: user", user)
+      return createPostAction({ ...args.postData })
+        .then(postInfo => {
+          console.log("TCL: postInfo", postInfo)
+          return addPostToUserAction(postInfo, user)
+            .then((message) => {
+              return (message)
+            });
+        })
+        .catch(err => { return err });
     }
   }
 }

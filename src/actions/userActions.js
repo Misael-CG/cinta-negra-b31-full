@@ -70,8 +70,23 @@ const loginAction = (email, password) => {
   });
 }
 
+const addPostToUserAction = (postData, userData) => {
+  return new Promise((resolve, reject) => {
+    UserModel.findByIdAndUpdate(
+      userData._id,
+      { $push: { posts: postData._id } },
+      { new: true }
+    )
+      .exec()
+      .then(() => {
+        resolve({ message: `se ha registrado el post con exito` })
+      }).catch(err => reject(err));
+  });
+}
+
 // exportamos los actions del usuario
 module.exports = {
   loginAction,
-  signupAction
+  signupAction,
+  addPostToUserAction
 }
