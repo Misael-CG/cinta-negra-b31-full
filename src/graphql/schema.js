@@ -41,7 +41,7 @@ const typeDefs = gql`
   type Mutation {
     signup(data: UserInput): Auth
     login(email: String!, password: String!): Auth
-    cretePost(postData: PostInput) : Message
+    cretePost(postData: PostInput) : Message @AuthDirective
   }
 `;
 
